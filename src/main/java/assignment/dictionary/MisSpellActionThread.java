@@ -104,7 +104,7 @@ public class MisSpellActionThread implements Runnable {
                     Wordlet w = new Wordlet(arr[i], inDictionary);
                     myLines.addWordlet(w);
                 }
-                controller.UpdateView(myLines);
+                showLines(myLines);
                 myLines.nextLine();
             }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
