@@ -7,7 +7,11 @@ package assignment.dictionary;
  * 
  * Mostly the adaption consists of making calling the appropriate method of the
  * MyHashTable class.
- * 
+ *
+ * getSize
+ * getKeyIterator
+ * contains
+ * add
  */
 
 import java.util.*;
@@ -55,7 +59,7 @@ public class HashedMapAdaptor<K,V> implements DictionaryInterface<K,V>,
     public V getValue(K key)
     {
         return myTable.get(key);
-    }    
+    }
     
     /** Sees whether a specific entry is in this dictionary.
     @param key An object search key of the desired entry.
