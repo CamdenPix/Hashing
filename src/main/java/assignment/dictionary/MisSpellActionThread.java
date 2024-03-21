@@ -100,7 +100,7 @@ public class MisSpellActionThread implements Runnable {
                 input.nextLine();
                 String[] arr = input.delimiter().split("[, ?.!()\"']+"); //please don't break
                 for(int i = 0; i < arr.length; i++){
-                    boolean inDictionary = myDictionary.contains(arr[i]);
+                    boolean inDictionary = checkWord(arr[i], theDictionary);
                     Wordlet w = new Wordlet(arr[i], inDictionary);
                     myLines.addWordlet(w);
                 }
