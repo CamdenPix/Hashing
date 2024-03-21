@@ -98,7 +98,7 @@ public class MisSpellActionThread implements Runnable {
             input = new Scanner(file);
             while (input.hasNextLine()) {
                 input.nextLine();
-                String[] arr = input.delimiter().split("[, ?.!()\"']+"); //please don't break
+                String[] arr = input.delimiter().split("[, ?.!()\"']+");
                 for(int i = 0; i < arr.length; i++){
                     boolean inDictionary = checkWord(arr[i], theDictionary);
                     Wordlet w = new Wordlet(arr[i], inDictionary);
