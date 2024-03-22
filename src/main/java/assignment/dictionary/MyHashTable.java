@@ -62,11 +62,53 @@ public class MyHashTable<K,V>
        return null;
    }
 
+    /** Removes a specific entry from this dictionary.
+     @param key An object search key of the entry to be removed.
+     @return Either the value that was associated with the search key
+     or null if no such object exists.
+     */
     public V remove(K key) {
-        return null;
-    }
+        int index = getIndex(key);
 
+        LinkedList<Entry<K,V>> table_row = table[index];
+        V result = null;
+
+        Entry<K,V> last_entry = table_row.getLast();
+        if (!this.containsKey(key)) {
+            return null;
+        }
+
+        for (int i = 0; i < table_row.size(); i++) {
+            if (table_row.get(i).key == key) {
+                result = table_row.get(i).value;
+                table_row.set(i, last_entry);
+                count--;
+            }
+        }
+
+        return result;
+    }
+    /** Retrieves from this dictionary the value associated with a given
+     search key.
+     @param key An object search key of the entry to be retrieved.
+     @return Either the value that is associated with the search key
+     or null if no such object exists. */
     public V get(K key) {
+        int index = getIndex(key);
+        LinkedList<Entry<K,V>> table_row = table[index];
+
+
+        if (!this.containsKey(key)) {
+
+            return null;
+        }
+
+        for (int i = 0; i < table_row.size(); i++) {
+            if (table_row.get(i).key == key) {
+                return table_row.get(i).value;
+            }
+        }
+
         return null;
     }
 
@@ -97,7 +139,16 @@ public class MyHashTable<K,V>
     }
 
     public Iterator<V> values() {
-        return null;
+        LinkedList<V> values = new LinkedList<>();
+
+        for (int i = 0; i < initial_capacity; i++) {
+            LinkedList<Entry<K,V>> table_row = table[i];
+            for (int v = 0; v < table_row.size(); v++) {
+                values.add(table_row.get(i).value);
+            }
+        }
+
+        return values.iterator();
     }
 
     public boolean isEmpty() {
@@ -109,7 +160,16 @@ public class MyHashTable<K,V>
     }
 
     public void clear() {
-        ;
+
+
+        for(int j = 0; j < table.length -1;j++) {
+            LinkedList<Entry<K,V>> table_row = table[j];
+            Entry<K,V> last_entry = table_row.getLast();
+            for (int i = 0; i < table_row.size(); i++) {
+                table_row.set(i, last_entry);
+                count--;
+            }
+        }
     }
 }
 
