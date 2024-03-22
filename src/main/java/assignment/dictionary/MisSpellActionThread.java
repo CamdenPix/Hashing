@@ -67,12 +67,14 @@ public class MisSpellActionThread implements Runnable {
         try {
 // ADD CODE HERE
 // >>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
+//Read from theFileName, compile into myDictionary ADT
+            File file = new File(theFileName);
+            input = new Scanner(file);
+            while (input.hasNextLine()){
+                myDictionary.add(input.nextLine(),input.nextLine());
+            }
+            dictionaryLoaded = true;
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-         
-
-
         } catch (IOException e) {
             System.out.println("There was an error in reading or opening the file: " + theFileName);
             System.out.println(e.getMessage());
@@ -88,15 +90,24 @@ public class MisSpellActionThread implements Runnable {
     public void checkWords(String theFileName, DictionaryInterface<String, String> theDictionary) {
         Scanner input;
         try {
- 
 // ADD CODE HERE
 // >>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
+//Read from theFileName, compile into myLines
+//NOTE: also calls the DictionaryController UpdateView() function
+            File file = new File(theFileName);
+            input = new Scanner(file);
+            while (input.hasNextLine()) {
+                input.nextLine();
+                String[] arr = input.delimiter().split("[, ?.!()\"']+");
+                for(int i = 0; i < arr.length; i++){
+                    boolean inDictionary = checkWord(arr[i], theDictionary);
+                    Wordlet w = new Wordlet(arr[i], inDictionary);
+                    myLines.addWordlet(w);
+                }
+                showLines(myLines);
+                myLines.nextLine();
+            }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
         } catch (IOException e) {
             System.out.println("There was an error in reading or opening the file: " + theFileName);
             System.out.println(e.getMessage());
@@ -110,17 +121,12 @@ public class MisSpellActionThread implements Runnable {
      */
     public boolean checkWord(String word, DictionaryInterface<String, String> theDictionary) {
         boolean result = false;
-
         // ADD CODE HERE
 //>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        
-
-
-
-
+//Check if a word is in myDictionary
+        result = theDictionary.contains(word);
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
         return result;
-
     }
 
     private void showLines(LinesToDisplay lines) {

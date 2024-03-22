@@ -20,10 +20,12 @@ public class LinesToDisplay {
     public LinesToDisplay() {
         //ADD CODE FOR THE CONSTRUCTOR
 //>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
-        
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
+        currentLine = 0;
+        lines = new AList[LINES]; //This code isn't safe
+        for(int i = 0; i < LINES; i++){
+            lines[i] = new AList<Wordlet>(15);
+        }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     /**
@@ -32,10 +34,9 @@ public class LinesToDisplay {
      */
     public void addWordlet(Wordlet w) {
         //ADD CODE HERE TO ADD A WORDLET TO THE CURRENT LINE
-
-//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
-       
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>
+        lines[currentLine].add(w);
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     /**
@@ -45,8 +46,21 @@ public class LinesToDisplay {
      */
     public void nextLine() {
         //ADD CODE TO HANDLE THE NEXT LINE
-//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
-
+//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>
+        int sizeIncrease = 5;
+        if(currentLine+1 == lines.length){
+            AList<Wordlet>[] temp = new AList[lines.length + sizeIncrease];
+            for(int i = 0; i<lines.length; i++)
+            {
+                temp[i] = lines[i];
+            }
+            for(int i = lines.length; i<lines.length+sizeIncrease; i++)
+            {
+                temp[i] = new AList<Wordlet>(15);
+            }
+            lines = temp;
+        }
+        currentLine++;
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
