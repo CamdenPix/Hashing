@@ -34,9 +34,19 @@ public class MyHashTable<K,V>
     private int initial_capacity = 10;
     private int count = 0;
     private LinkedList[] table = new LinkedList[initial_capacity];
+    public MyHashTable(){
+        for(int i = 0; i<initial_capacity; i++){
+            table[i] = new LinkedList<>();
+        }
+    }
 
     private int getIndex(Object key) {
-        return (int)key % initial_capacity;
+        String str = String.valueOf(key);
+        int a = 0;
+        for(int i = 0; i < str.length(); i++){
+            a += Character.getNumericValue(str.charAt(i));
+        }
+        return a % initial_capacity;
     }
 
    public V put(K key, V value) {
@@ -117,8 +127,13 @@ public class MyHashTable<K,V>
 
         for (int i = 0; i < initial_capacity; i++) {
             LinkedList<Entry<K,V>> table_row = table[i];
-            for (int k = 0; k < table_row.size(); k++) {
-                keys.add(table_row.get(i).key);
+            if(table_row != null) {
+                for (int k = 0; k < table_row.size(); k++) {
+                    keys.add(table_row.get(k).key);
+                }
+            }
+            else{
+                return false;
             }
         }
 

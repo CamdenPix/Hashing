@@ -71,7 +71,8 @@ public class MisSpellActionThread implements Runnable {
             File file = new File(theFileName);
             input = new Scanner(file);
             while (input.hasNextLine()){
-                myDictionary.add(input.nextLine(),input.nextLine());
+                String str = input.nextLine().toLowerCase();
+                myDictionary.add(str,str);
             }
             dictionaryLoaded = true;
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -92,15 +93,19 @@ public class MisSpellActionThread implements Runnable {
         try {
 // ADD CODE HERE
 // >>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//Read from theFileName, compile into myLines
-//NOTE: also calls the DictionaryController UpdateView() function
             File file = new File(theFileName);
             input = new Scanner(file);
             while (input.hasNextLine()) {
-                input.nextLine();
-                String[] arr = input.delimiter().split("[, ?.!()\"']+");
+                String str = input.nextLine();
+                String[] arr = str.split("(?<=[, :?.!()\";])|(?=[, :?.!()\";]+)");
                 for(int i = 0; i < arr.length; i++){
-                    boolean inDictionary = checkWord(arr[i], theDictionary);
+                    System.out.println(arr[i]);
+                    boolean inDictionary = checkWord(arr[i].toLowerCase(), theDictionary);
+                    if(Objects.equals(arr[i], ",") || Objects.equals(arr[i], ":") || Objects.equals(arr[i], "?") ||
+                            Objects.equals(arr[i], ".") || Objects.equals(arr[i], "!") || Objects.equals(arr[i], "(")
+                            || Objects.equals(arr[i], ")") || Objects.equals(arr[i], "\"") || Objects.equals(arr[i], ";")){
+                        inDictionary = true;
+                    }
                     Wordlet w = new Wordlet(arr[i], inDictionary);
                     myLines.addWordlet(w);
                 }

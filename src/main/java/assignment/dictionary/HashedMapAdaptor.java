@@ -76,7 +76,7 @@ public class HashedMapAdaptor<K,V> implements DictionaryInterface<K,V>,
     keys in the dictionary. */
     public Iterator<K> getKeyIterator()
     {
-        return myTable.keySet().iterator();
+        return myTable.keySet();
     }
     
     
@@ -85,7 +85,7 @@ public class HashedMapAdaptor<K,V> implements DictionaryInterface<K,V>,
     in this dictionary. */
     public Iterator<V> getValueIterator()
     {
-        return myTable.values().iterator();
+        return myTable.values();
     }    
     
     /** Sees whether this dictionary is empty.
