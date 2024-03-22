@@ -97,14 +97,17 @@ public class MisSpellActionThread implements Runnable {
             input = new Scanner(file);
             while (input.hasNextLine()) {
                 String str = input.nextLine();
+                //uses a regular expression to split the delimiters into their own elements
                 String[] arr = str.split("(?<=[, :?.!()\";])|(?=[, :?.!()\";]+)");
                 for(int i = 0; i < arr.length; i++){
                     System.out.println(arr[i]);
-                    boolean inDictionary = checkWord(arr[i].toLowerCase(), theDictionary);
-                    if(Objects.equals(arr[i], ",") || Objects.equals(arr[i], ":") || Objects.equals(arr[i], "?") ||
-                            Objects.equals(arr[i], ".") || Objects.equals(arr[i], "!") || Objects.equals(arr[i], "(")
-                            || Objects.equals(arr[i], ")") || Objects.equals(arr[i], "\"") || Objects.equals(arr[i], ";")){
+                    boolean inDictionary = false;
+                    Set<String> specialCharacters = new HashSet<>(Arrays.asList(",", ":", "?", ".", "!", "(", ")", "\"", ";"));
+                    if (specialCharacters.contains(arr[i])){
                         inDictionary = true;
+                    }
+                    else{
+                        inDictionary = checkWord(arr[i].toLowerCase(), theDictionary);
                     }
                     Wordlet w = new Wordlet(arr[i], inDictionary);
                     myLines.addWordlet(w);
